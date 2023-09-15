@@ -26,12 +26,30 @@ public class BertGenerator : IDisposable {
     }
 
     public float[] Embed(string text) {
-        var embeddings = new float[EmbeddingSize!.Value];
-        
+        // var embeddings = new float[EmbeddingSize!.Value];
+
         // use the single text api
         // BertCppNative.bert_encode(_bertCtx, _threadCount, text, embeddings);
-        
-        // use the separate tokenization & eval api
+
+        // // use the separate tokenization & eval api
+        // var tokens = new int[MaxSequenceLength!.Value];
+        // var nTokens = 0;
+        // unsafe {
+        //     // fixed (int* pTokens = tokens) {
+        //     //     BertCppNative.bert_tokenize(_bertCtx, text, pTokens, &nTokens, MaxSequenceLength.Value);
+        //     // }
+        //     BertCppNative.bert_tokenize(_bertCtx, text, tokens, &nTokens, MaxSequenceLength.Value);
+        // }
+        //
+        // BertCppNative.bert_eval(_bertCtx, _threadCount, tokens, nTokens, embeddings);
+
+        var tokens = Tokenize(text);
+        var embeddings = Eval(tokens);
+
+        return embeddings;
+    }
+
+    public int[] Tokenize(string text) {
         var tokens = new int[MaxSequenceLength!.Value];
         var nTokens = 0;
         unsafe {
@@ -40,9 +58,12 @@ public class BertGenerator : IDisposable {
             // }
             BertCppNative.bert_tokenize(_bertCtx, text, tokens, &nTokens, MaxSequenceLength.Value);
         }
-        
-        BertCppNative.bert_eval(_bertCtx, _threadCount, tokens, nTokens, embeddings);
-        
+        return tokens[..nTokens];
+    }
+
+    public float[] Eval(int[] tokens) {
+        var embeddings = new float[EmbeddingSize!.Value];
+        BertCppNative.bert_eval(_bertCtx, _threadCount, tokens, tokens.Length, embeddings);
         return embeddings;
     }
 

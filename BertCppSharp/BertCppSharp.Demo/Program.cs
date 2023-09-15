@@ -12,12 +12,12 @@ class Program {
             Console.WriteLine($"Failed to load model: {e}");
         }
 
-        var wayTooLong = "This is a very long text that is way too long for the model to handle.";
-        var sb = new StringBuilder();
-        for (var i = 0; i < 100; i++) {
-            sb.Append(wayTooLong);
-        }
-        text = sb.ToString();
+        // var wayTooLong = "This is a very long text that is way too long for the model to handle.";
+        // var sb = new StringBuilder();
+        // for (var i = 0; i < 100; i++) {
+        //     sb.Append(wayTooLong);
+        // }
+        // text = sb.ToString();
         
         Console.WriteLine($"Model: {gen.ModelFile}");
         Console.WriteLine($"Max sequence length: {gen.MaxSequenceLength}");
