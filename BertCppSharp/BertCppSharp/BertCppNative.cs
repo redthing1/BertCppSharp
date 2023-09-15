@@ -45,31 +45,31 @@ public static class BertCppNative {
     // [DllImport(NativeLibrary, CallingConvention = CallingConvention.Cdecl)]
     // public static extern void bert_encode_batch(IntPtr ctx, int n_threads, int n_batch_size, int n_inputs, [MarshalAs(UnmanagedType.LPStr)] string[] texts, float[] embeddings);
 
-    // // // Api for separate tokenization & eval
-    // //
-    // //     void bert_tokenize(
-    // //         bert_ctx* ctx, 
-    // //
-    // //     const (char)* text,
-    // //         bert_vocab_id* tokens,
-    // //     int* n_tokens,
-    // //     int n_max_tokens);
-    // //
+    // // Api for separate tokenization & eval
     //
-    // [DllImport(NativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-    // public static extern unsafe void bert_tokenize(IntPtr ctx, [MarshalAs(UnmanagedType.LPStr)] string text, int[] tokens, int* n_tokens, int n_max_tokens);
+    //     void bert_tokenize(
+    //         bert_ctx* ctx, 
+    //
+    //     const (char)* text,
+    //         bert_vocab_id* tokens,
+    //     int* n_tokens,
+    //     int n_max_tokens);
+    //
+    
+    [DllImport(NativeLibrary, CallingConvention = CallingConvention.Cdecl)]
+    public static extern unsafe void bert_tokenize(IntPtr ctx, [MarshalAs(UnmanagedType.LPStr)] string text, int[] tokens, int* n_tokens, int n_max_tokens);
 
-    // //     void bert_eval(
-    // //         bert_ctx* ctx,
-    // //         int n_threads,
-    // //         bert_vocab_id* tokens,
-    // //         int n_tokens,
-    // //         float* embeddings
-    // //     );
-    // //
+    //     void bert_eval(
+    //         bert_ctx* ctx,
+    //         int n_threads,
+    //         bert_vocab_id* tokens,
+    //         int n_tokens,
+    //         float* embeddings
+    //     );
     //
-    // [DllImport(NativeLibrary, CallingConvention = CallingConvention.Cdecl)]
-    // public static extern void bert_eval(IntPtr ctx, int n_threads, int[] tokens, int n_tokens, float[] embeddings);
+    
+    [DllImport(NativeLibrary, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void bert_eval(IntPtr ctx, int n_threads, int[] tokens, int n_tokens, float[] embeddings);
 
     // // // NOTE: for batch processing the longest input must be first
     // //     void bert_eval_batch(

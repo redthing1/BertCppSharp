@@ -27,7 +27,22 @@ public class BertGenerator : IDisposable {
 
     public float[] Embed(string text) {
         var embeddings = new float[EmbeddingSize!.Value];
-        BertCppNative.bert_encode(_bertCtx, _threadCount, text, embeddings);
+        
+        // use the single text api
+        // BertCppNative.bert_encode(_bertCtx, _threadCount, text, embeddings);
+        
+        // use the separate tokenization & eval api
+        var tokens = new int[MaxSequenceLength!.Value];
+        var nTokens = 0;
+        unsafe {
+            // fixed (int* pTokens = tokens) {
+            //     BertCppNative.bert_tokenize(_bertCtx, text, pTokens, &nTokens, MaxSequenceLength.Value);
+            // }
+            BertCppNative.bert_tokenize(_bertCtx, text, tokens, &nTokens, MaxSequenceLength.Value);
+        }
+        
+        BertCppNative.bert_eval(_bertCtx, _threadCount, tokens, nTokens, embeddings);
+        
         return embeddings;
     }
 
