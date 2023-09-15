@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <Content Include="runtimes\**" PackagePath="runtimes" Visible="false"/>
+    </ItemGroup>
+
+</Project>
