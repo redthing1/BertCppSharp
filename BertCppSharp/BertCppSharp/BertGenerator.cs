@@ -64,11 +64,19 @@ public class BertGenerator : IDisposable {
         }
         return tokens[..nTokens];
     }
+    
+    public async Task<int[]> TokenizeAsync(string text) {
+        return await Task.Run(() => Tokenize(text));
+    }
 
     public float[] Eval(int[] tokens) {
         var embeddings = new float[EmbeddingSize!.Value];
         BertCppNative.bert_eval(_bertCtx, _threadCount, tokens, tokens.Length, embeddings);
         return embeddings;
+    }
+    
+    public async Task<float[]> EvalAsync(int[] tokens) {
+        return await Task.Run(() => Eval(tokens));
     }
 
     private void FreeContext() {
