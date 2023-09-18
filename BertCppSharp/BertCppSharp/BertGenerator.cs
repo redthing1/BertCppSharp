@@ -48,6 +48,10 @@ public class BertGenerator : IDisposable {
 
         return embeddings;
     }
+    
+    public async Task<float[]> EmbedAsync(string text) {
+        return await Task.Run(() => Embed(text));
+    }
 
     public int[] Tokenize(string text) {
         var tokens = new int[MaxSequenceLength!.Value];
